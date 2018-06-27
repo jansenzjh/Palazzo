@@ -1,0 +1,54 @@
+﻿
+
+
+@(Html.Kendo().Grid<Pazzino.Models.Training>()
+    .Name("TrainingGrid")
+    .Columns(columns =>
+    {
+        columns.Bound(p => p.Field).Width(120);
+        columns.Bound(p => p.OrganizationName).Width(150);
+        columns.Bound(p => p.TrainingTitle).Width(150);
+        columns.Bound(p => p.Location).Width(120);
+        columns.Command(command => { command.Edit().Text(" "); command.Destroy().Text(" "); }).Width(150);
+    })
+    .ToolBar(toolbar => toolbar.Create())
+    .Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("EditCandidateTraining").Window(w => w.Width(400).Resizable().Scrollable(true)))
+    .Sortable()
+    .Scrollable()
+    .HtmlAttributes(new { style = "height:250px;" })
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .PageSize(20)
+        .Events(events => events.Error("error_handler"))
+        .Model(model =>
+        {
+            model.Id(p => p.Id);
+            model.Field(x => x.UserID).DefaultValue(SessionItems.CurrentUser.Id);
+        })
+        .Create(update => update.Action("EditingTraining_Create", "Resume"))
+        .Read(read => read.Action("EditingTraining_Read", "Resume"))
+        .Update(update => update.Action("EditingTraining_Update", "Resume"))
+        .Destroy(update => update.Action("EditingTraining_Destroy", "Resume"))
+    )
+)
+<script type="text/javascript">
+    function error_handler(e) {
+        if (e.errors) {
+            var message = "Errors:\n";
+            $.each(e.errors, function (key, value) {
+                if ('errors' in value) {
+                    $.each(value.errors, function () {
+                        message += this + "\n";
+                    });
+                }
+            });
+            alert(message);
+        }
+    }
+</script>
+
+<style>
+    div.k-edit-form-container {
+        width: auto;
+    }
+</style>

@@ -1,0 +1,55 @@
+﻿
+
+
+@(Html.Kendo().Grid<Pazzino.Models.Language>()
+    .Name("LanguageGrid")
+    .Columns(columns =>
+    {
+        columns.Bound(p => p.LanguageName).Width(120);
+        columns.Bound(p => p.ListeningLevel).Width(120);
+        columns.Bound(p => p.ReadingLevel).Width(150);
+        columns.Bound(p => p.SpeakingLevel).Width(120);
+        columns.Bound(p => p.WritingLevel).Width(120);
+        columns.Command(command => { command.Edit().Text(" "); command.Destroy().Text(" "); }).Width(150);
+    })
+    .ToolBar(toolbar => toolbar.Create())
+    .Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("EditCandidateLanguage").Window(w => w.Width(400).Resizable().Scrollable(true)))
+    .Sortable()
+    .Scrollable()
+    .HtmlAttributes(new { style = "height:250px;" })
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .PageSize(20)
+        .Events(events => events.Error("error_handler"))
+        .Model(model =>
+        {
+            model.Id(p => p.Id);
+            model.Field(x => x.UserID).DefaultValue(SessionItems.CurrentUser.Id);
+        })
+        .Create(update => update.Action("EditingLanguage_Create", "Resume"))
+        .Read(read => read.Action("EditingLanguage_Read", "Resume"))
+        .Update(update => update.Action("EditingLanguage_Update", "Resume"))
+        .Destroy(update => update.Action("EditingLanguage_Destroy", "Resume"))
+    )
+)
+<script type="text/javascript">
+    function error_handler(e) {
+        if (e.errors) {
+            var message = "Errors:\n";
+            $.each(e.errors, function (key, value) {
+                if ('errors' in value) {
+                    $.each(value.errors, function () {
+                        message += this + "\n";
+                    });
+                }
+            });
+            alert(message);
+        }
+    }
+</script>
+
+<style>
+    div.k-edit-form-container {
+        width: auto;
+    }
+</style>

@@ -1,0 +1,24 @@
+﻿
+
+    @(Html.Kendo().AutoComplete()
+          .Name("location")
+          .MinLength(3)
+          .Delay(500)
+          .HtmlAttributes(new { style = "width:100%" })
+          .DataSource(source =>
+          {
+              source.Read(read =>
+              {
+                  read.Action("GetLocation", "Location").Data("onAdditionalDataLocation");
+              })
+              .ServerFiltering(true);
+          }).ValuePrimitive(true)
+          .Placeholder("City, Zip")
+    )
+    <script>
+            function onAdditionalDataLocation() {
+                return {
+                    text: $("#location").val()
+                };
+            }
+    </script>

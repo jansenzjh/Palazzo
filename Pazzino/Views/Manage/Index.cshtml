@@ -1,0 +1,125 @@
+﻿@model Pazzino.Models.IndexViewModel
+@{
+    ViewBag.Title = "Manage";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p class="text-success">@ViewBag.StatusMessage</p>
+<div>
+    <h4>Change your account settings</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>Representitive</dt>
+        <dd>
+            @{ if (SessionItems.CurrentUser.CompanyID == Guid.Empty) {
+                    @Html.ActionLink("Claim as Company Representitive", "EditCompany", "Company")
+                }
+                else {
+                    @Html.ActionLink(Pazzino.Models.CompanyModel.GetCompanyName(SessionItems.CurrentUser.CompanyID), "EditCompany", "Company")
+                }
+            }
+
+        </dd>
+    </dl>
+    <hr />
+
+     @{ if (SessionItems.CurrentUser.CompanyID != Guid.Empty) {
+
+    <dl class="dl-horizontal">
+        <dt>Actions</dt>
+        <dd>
+            @Html.ActionLink("Add Job Post", "EditJobPost", "Job", new { JobPostID = Guid.Empty }, new { @class = "link"})
+        </dd>
+        <dd>
+            @Html.ActionLink("Search Resume", "Resumes", "Resume", null, new { @class = "link" })
+        </dd>
+
+
+    </dl>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>Current Ads:</dt>
+        <dd>
+            @Html.Partial("CompanyJobGrid")
+        </dd>
+
+    </dl>
+
+    <hr />
+
+
+         }
+         else
+         {
+
+
+    <dl class="dl-horizontal">
+        <dt>Resume:</dt>
+        <dd>
+            @Html.ActionLink("Build Resume", "BuildResume", "Resume")
+        </dd>
+        <dd>
+            <button type="button" class="btn btn-default" id="btnToggleUploadResumeView">Upload Resume</button>
+        </dd>
+        <dd id="uploadResumeView" hidden="hidden">
+            @Html.Partial("UploadResumeView")
+        </dd>
+        
+
+    </dl>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>Saved Jobs:</dt>
+        <dd>
+            @Html.Partial("UserJobGrid")
+        </dd>
+
+    </dl>
+    <hr />
+
+
+
+    }
+            }
+
+
+    <dl class="dl-horizontal">
+        <dt>Password:</dt>
+        <dd>
+            [
+            @if (Model.HasPassword)
+            {
+                @Html.ActionLink("Change your password", "ChangePassword")
+            }
+            else
+            {
+                @Html.ActionLink("Create", "SetPassword")
+            }
+            ]
+        </dd>
+    </dl>
+
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $("#btnAddJob").click(function () {
+
+        });
+        $("#btnToggleUploadResumeView").click(function () {
+            toggleUploadResumeView();
+        });
+    });
+
+    function toggleUploadResumeView() {
+        if ($("#uploadResumeView").is(":visible")) {
+            $("#uploadResumeView").hide();
+            $("#btnToggleUploadResumeView").text("Upload Resume");
+        } else {
+            $("#uploadResumeView").show();
+            $("#btnToggleUploadResumeView").text("Hide Upload Resume View");
+        }
+    }
+</script>

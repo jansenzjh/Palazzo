@@ -1,0 +1,55 @@
+﻿
+
+@(Html.Kendo().Grid<Pazzino.Models.WorkExperience>()
+    .Name("WorkExperienceGrid")
+    .Columns(columns =>
+    {
+        columns.Bound(p => p.Designation).Width(120);
+        columns.Bound(p => p.StartDate).Width(80).Format("{0:MM/dd/yy}");
+        columns.Bound(p => p.EndDate).Width(80).Format("{0:MM/dd/yy}");
+        columns.Bound(p => p.OrganizationName).Width(150);
+        columns.Bound(p => p.JobField).Width(150);
+        columns.Bound(p => p.JobDescription).Width(120);
+        columns.Command(command => { command.Edit().Text(" "); command.Destroy().Text(" "); }).Width(150);
+    })
+    .ToolBar(toolbar => toolbar.Create())
+    .Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("EditCandidateWorkExperience").Window(w => w.Width(800).Resizable().Scrollable(true)))
+    .Sortable()
+    .Scrollable()
+    .HtmlAttributes(new { style = "height:250px;" })
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .PageSize(20)
+        .Events(events => events.Error("error_handler"))
+        .Model(model =>
+        {
+            model.Id(p => p.Id);
+            model.Field(x => x.UserID).DefaultValue(SessionItems.CurrentUser.Id);
+        })
+        .Create(update => update.Action("EditingWorkExperience_Create", "Resume"))
+        .Read(read => read.Action("EditingWorkExperience_Read", "Resume"))
+        .Update(update => update.Action("EditingWorkExperience_Update", "Resume"))
+        .Destroy(update => update.Action("EditingWorkExperience_Destroy", "Resume"))
+    )
+)
+<script type="text/javascript">
+    function error_handler(e) {
+        if (e.errors) {
+            var message = "Errors:\n";
+            $.each(e.errors, function (key, value) {
+                if ('errors' in value) {
+                    $.each(value.errors, function () {
+                        message += this + "\n";
+                    });
+                }
+            });
+            alert(message);
+        }
+    }
+</script>
+
+<style>
+    div.k-edit-form-container {
+        width: auto;
+    }
+</style>

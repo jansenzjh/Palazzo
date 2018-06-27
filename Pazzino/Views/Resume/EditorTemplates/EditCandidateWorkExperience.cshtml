@@ -1,0 +1,49 @@
+﻿@model Pazzino.Models.WorkExperience
+
+<form>
+   
+    <div class="form-group">
+        <label class="">
+            Job Field
+        </label>
+        @Html.Kendo().TextBoxFor(x => x.JobField).HtmlAttributes(new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        <label class="">
+            Organization
+        </label>
+        @Html.Kendo().TextBoxFor(x => x.OrganizationName).HtmlAttributes(new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        <label class="">
+            Designation
+        </label>
+        @Html.Kendo().TextBoxFor(x => x.Designation).HtmlAttributes(new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        <label class="">
+            Start Date
+        </label>
+        @Html.Kendo().DatePickerFor(x => x.StartDate).HtmlAttributes(new { @class = "form-control" }).Format("MM/dd/yyyy").ParseFormats(new string[] { "MM/dd/yyyy" })
+    </div>
+
+    <div class="form-group">
+        <label class="">
+            End Date
+        </label>
+        @Html.Kendo().DatePickerFor(x => x.EndDate).HtmlAttributes(new { @class = "form-control" }).Format("MM/dd/yyyy").ParseFormats(new string[] { "MM/dd/yyyy" })
+    </div>
+
+    <div class="form-group">
+
+        <div class="">
+            @Html.Kendo().EditorFor(x => x.JobDescription)
+        </div>
+    </div>
+
+
+    
+</form>

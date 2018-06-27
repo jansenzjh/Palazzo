@@ -1,0 +1,36 @@
+﻿
+@model Pazzino.Models.Reference
+
+<form>
+
+    <div class="form-group">
+        <label class="">
+            Name
+        </label>
+        @Html.Kendo().TextBoxFor(x => x.Name).HtmlAttributes(new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        <label class="">
+            Organization
+        </label>
+        @Html.Kendo().TextBoxFor(x => x.Organization).HtmlAttributes(new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        <label class="">
+            Phone
+        </label>
+        @Html.Kendo().TextBoxFor(x => x.Phone).HtmlAttributes(new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        <label class="">
+            Email
+        </label>
+        @Html.Kendo().TextBoxFor(x => x.Email).HtmlAttributes(new { @class = "form-control" })
+    </div>
+
+    
+
+</form>

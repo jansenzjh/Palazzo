@@ -1,0 +1,47 @@
+﻿
+@model Pazzino.Models.Language
+@{ 
+    List<string> levels = new List<string>() { "Elementary proficiency", "Limited working proficiency", "Professional working proficiency", "Full professional proficiency", "Native or bilingual proficiency" };
+}
+<form>
+
+    <div class="form-group">
+        <label class="">
+            Language Name
+        </label>
+        @Html.Kendo().TextBoxFor(x => x.LanguageName).HtmlAttributes(new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        <label class="">
+            Listening
+        </label>
+        @Html.Kendo().DropDownListFor(x => x.ListeningLevel).BindTo(new SelectList(levels)).HtmlAttributes(new { @class = "form-control", @style = "width:100%;" })
+    </div>
+
+    <div class="form-group">
+        <label class="">
+            Speaking
+        </label>
+        @Html.Kendo().DropDownListFor(x => x.SpeakingLevel).BindTo(new SelectList(levels)).HtmlAttributes(new { @class = "form-control", @style = "width:100%;" })
+    </div>
+
+    <div class="form-group">
+        <label class="">
+            Reading
+        </label>
+        @Html.Kendo().DropDownListFor(x => x.ReadingLevel).BindTo(new SelectList(levels)).HtmlAttributes(new { @class = "form-control", @style = "width:100%;" })
+    </div>
+
+    <div class="form-group">
+        <label class="">
+            Writing
+        </label>
+        @Html.Kendo().DropDownListFor(x => x.WritingLevel).BindTo(new SelectList(levels)).HtmlAttributes(new { @class = "form-control", @style = "width:100%;" })
+    </div>
+
+   
+
+
+
+</form>

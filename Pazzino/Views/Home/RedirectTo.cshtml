@@ -1,0 +1,28 @@
+﻿@model String
+@{
+    Layout = "~/Views/Shared/_CleanLayout.cshtml";
+}
+@{
+    ViewBag.Title = "Get me job";
+}
+
+<div>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- redirect ad -->
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:336px;height:280px"
+         data-ad-client="ca-pub-6686593824323685"
+         data-ad-slot="8879058938"></ins>
+    <script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+<script>
+    $(document).ready(function () {
+        setTimeout(function () {
+            console.log('@Model');
+            window.location = '@Model';
+        }, 5000);
+    });
+</script>

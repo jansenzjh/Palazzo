@@ -1,0 +1,132 @@
+﻿@model Pazzino.Models.JobPostModel
+
+<h2>Edit Job Post</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.Id)
+    @Html.Hidden("IsIndeed", false)
+    @Html.Hidden("UserID", SessionItems.CurrentUser.Id)
+    @Html.Hidden("CompanyName", SessionItems.UserCompany.Name)
+    @Html.Hidden("CompanyID", SessionItems.UserCompany.Id)
+    
+    <div>
+
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <dl class="dl-horizontal">
+            <dt>@Html.Label("Job Name", htmlAttributes: new { @class = "control-label col-md-2" })</dt>
+            <dd>
+                @Html.EditorFor(model => model.JobName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.JobName, "", new { @class = "text-danger" })
+            </dd>
+        </dl>
+
+
+        <dl class="dl-horizontal">
+            <dt> @Html.LabelFor(model => model.JobLocation, htmlAttributes: new { @class = "control-label col-md-2" })</dt>
+            <dd>
+                @Html.EditorFor(model => model.JobLocation, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.JobLocation, "", new { @class = "text-danger" })
+            </dd>
+        </dl>
+
+        <dl class="dl-horizontal">
+            <dt> @Html.Label("Job Summary", htmlAttributes: new { @class = "control-label col-md-2" })</dt>
+            <dd>
+                @Html.EditorFor(model => model.JobDescription, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.JobDescription, "", new { @class = "text-danger" })
+            </dd>
+        </dl>
+
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.LabelFor(model => model.JobPostDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            </dt>
+            <dd>
+                @(Html.Kendo().DatePickerFor(x => x.JobPostDate).Name("JobPostDate"))
+                @Html.ValidationMessageFor(model => model.JobPostDate, "", new { @class = "text-danger" })
+
+            </dd>
+        </dl>
+
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.LabelFor(model => model.ExpireDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            </dt>
+            <dd>
+                @(Html.Kendo().DatePickerFor(x => x.ExpireDate).Name("ExpireDate"))
+                @Html.ValidationMessageFor(model => model.ExpireDate, "", new { @class = "text-danger" })
+            </dd>
+        </dl>
+
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.LabelFor(model => model.Salary, htmlAttributes: new { @class = "control-label col-md-2" })
+            </dt>
+            <dd>
+                @Html.EditorFor(model => model.Salary, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Salary, "", new { @class = "text-danger" })
+            </dd>
+        </dl>
+
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.LabelFor(model => model.Category, htmlAttributes: new { @class = "control-label col-md-2" })
+            </dt>
+            <dd>
+                @Html.EditorFor(model => model.Category, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Category, "", new { @class = "text-danger" })
+            </dd>
+        </dl>
+
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+            </dt>
+            <dd>
+                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+            </dd>
+        </dl>
+
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.LabelFor(model => model.Url, htmlAttributes: new { @class = "control-label col-md-2" })
+            </dt>
+            <dd>
+                @Html.EditorFor(model => model.Url, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Url, "", new { @class = "text-danger" })
+            </dd>
+        </dl>
+
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            </dt>
+            <dd>
+                @(Html.Kendo().EditorFor(x=>x.Description)
+                      .Name("Description")
+                      .HtmlAttributes(new { style = "height:440px" })
+                      .Resizable(resizable => resizable.Content(true).Toolbar(true))
+                      .Value(HttpUtility.HtmlDecode( Model.Description))
+                      )
+                
+                
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </dd>
+        </dl>
+
+
+        <dl class="dl-horizontal">
+            <dt>
+                Actions
+            </dt>
+            <dd>
+                <input type="submit" value="Save" class="btn btn-default" />
+            </dd>
+        </dl>
+        
+    </div>
+}

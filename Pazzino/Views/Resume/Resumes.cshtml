@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewBag.Title = "Resumes";
+}
+
+<div class="panel panel-default">
+    <div class="panel-heading">Search Resumes</div>
+    <div class="panel-body">
+        <row>
+            <div class="col-md-2">
+                @Html.Partial("ResumeSearchView")
+            </div>
+
+
+            <div class="col-md-10">
+                @(Html.Kendo().Grid<Pazzino.Models.UserDetailModel>()
+    .Name("ResumeGrid")
+    .Columns(columns =>
+    {
+        columns.Bound(p => p.Id).ClientTemplate(@Html.ActionLink("#=FirstName # #=LastName#", "ViewResume", "Resume", new { userId = "#=UserID#" }, null).ToHtmlString()).Width(200).Title("Name");
+        columns.Bound(p => p.Birthday).ClientTemplate("#=new Date().getFullYear() - Birthday.getFullYear()#").Title("Age").Width(200);
+        columns.Bound(p => p.Gender);
+
+    })
+    .Sortable()
+    .Scrollable()
+    .HtmlAttributes(new { style = "height:250px;" })
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .PageSize(20)
+        .Events(events => events.Error("error_handler"))
+        .Model(model =>
+        {
+            model.Id(p => p.Id);
+        })
+        .Read(read => read.Action("Resume_Read", "Resume"))
+    //.Destroy(update => update.Action("CompanyJob_Destroy", "Job"))
+    )
+                )
+                <script type="text/javascript">
+                    function error_handler(e) {
+                        if (e.errors) {
+                            var message = "Errors:\n";
+                            $.each(e.errors, function (key, value) {
+                                if ('errors' in value) {
+                                    $.each(value.errors, function () {
+                                        message += this + "\n";
+                                    });
+                                }
+                            });
+                            alert(message);
+                        }
+                    }
+                </script>
+
+                <style>
+                    div.k-edit-form-container {
+                        width: auto;
+                    }
+                </style>
+            </div>
+        </row>
+
+    </div>
+</div>
+

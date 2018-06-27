@@ -1,0 +1,21 @@
+﻿
+@model Pazzino.Models.Skill
+@{
+    List<string> levels = new List<string>() { "Amateur", "Novice", "Average", "Skilled", "Professional", "Specialist", "Expert"};
+}
+<form>
+
+    <div class="form-group">
+        <label class="">
+            Skill Name
+        </label>
+        @Html.Kendo().TextBoxFor(x => x.SkillName).HtmlAttributes(new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        <label class="">
+            Level
+        </label>
+        @Html.Kendo().DropDownListFor(x => x.SkillLevel).BindTo(new SelectList(levels)).HtmlAttributes(new { @class = "form-control", @style = "width:100%;" })
+    </div>
+</form>

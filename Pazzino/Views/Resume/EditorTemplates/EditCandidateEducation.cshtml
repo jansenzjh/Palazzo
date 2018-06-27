@@ -1,0 +1,42 @@
+﻿
+@model Pazzino.Models.Education
+@{
+    List<string> degrees = new List<string>() { "High School Graduate", "Associate", "Bachelor", "Master", "Doctorate"};
+    List<int> years = new List<int>();
+    for (int i = DateTime.Today.Year - 70; i < DateTime.Today.Year + 5; i++)
+    {
+        years.Add(i);
+    }
+}
+<form>
+
+    <div class="form-group">
+        <label class="">
+            Degree
+        </label>
+        @Html.Kendo().DropDownListFor(x => x.Degree).BindTo(new SelectList(degrees)).HtmlAttributes(new { @class = "form-control", @style = "width:100%;" })
+    </div>
+
+    <div class="form-group">
+        <label class="">
+            Subject
+        </label>
+        @Html.Kendo().TextBoxFor(x => x.Subject).HtmlAttributes(new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        <label class="">
+            Institute
+        </label>
+        @Html.Kendo().TextBoxFor(x => x.Institute).HtmlAttributes(new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        <label class="">
+            Graduation Year
+        </label>
+        @Html.Kendo().DropDownListFor(x => x.GraduationYear).BindTo(new SelectList(years)).HtmlAttributes(new { @class = "form-control", @style = "width:100%;" })
+    </div>
+
+
+</form>

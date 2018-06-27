@@ -1,0 +1,128 @@
+﻿
+@model Pazzino.Database.UserDetail
+
+<form action="/Resume/SaveUserDetail">
+    @Html.Hidden("UserID", SessionItems.CurrentUser.Id)
+    @Html.HiddenFor(x => x.Id)
+    <div class="form-group">
+        <label class="">
+            First Name
+        </label>
+        @Html.Kendo().TextBoxFor(x => x.FirstName).HtmlAttributes(new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        <label class="">
+            Last Name
+        </label>
+        @Html.Kendo().TextBoxFor(x => x.LastName).HtmlAttributes(new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        <label class="">
+            Birthday
+        </label>
+        @Html.Kendo().DatePickerFor(x => x.Birthday).HtmlAttributes(new { @class = "form-control" }).Format("MM/dd/yyyy").ParseFormats(new string[] { "MM/dd/yyyy" })
+    </div>
+
+    <div class="form-group">
+        <label class="">
+            Gender
+        </label>
+        @Html.Kendo().TextBoxFor(x => x.Gender).HtmlAttributes(new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        <label class="">
+            Nationality
+        </label>
+        @Html.Kendo().TextBoxFor(x => x.Nationality).HtmlAttributes(new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        <label class="">
+            Email
+        </label>
+        @Html.Kendo().TextBoxFor(x => x.Email).HtmlAttributes(new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        <label class="">
+            Phone
+        </label>
+        @Html.Kendo().TextBoxFor(x => x.Phone).HtmlAttributes(new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        <label class="">
+            Address 1
+        </label>
+        @Html.Kendo().TextBoxFor(x => x.Address1).HtmlAttributes(new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        <label class="">
+            Address 2
+        </label>
+        @Html.Kendo().TextBoxFor(x => x.Address2).HtmlAttributes(new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        <label class="">
+            City
+        </label>
+        @Html.Kendo().TextBoxFor(x => x.City).HtmlAttributes(new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        <label class="">
+            State
+        </label>
+        @Html.Kendo().TextBoxFor(x => x.State).HtmlAttributes(new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        <label class="">
+            Country
+        </label>
+        @Html.Kendo().TextBoxFor(x => x.Country).HtmlAttributes(new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        <label class="">
+            Zip
+        </label>
+        @Html.Kendo().TextBoxFor(x => x.Zip).HtmlAttributes(new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        <label class="">
+            Interest
+        </label>
+        <div class="">
+            @Html.TextAreaFor(x => x.Interest, new { @style="width:100%;"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="">
+            Achievement
+        </label>
+        <div class="">
+            @Html.TextAreaFor(x => x.Achievement, new { @style = "width:100%;" })
+        </div>
+    </div>
+
+    <div class="">
+        <button onclick="ajaxFormSubmit(this, function () { console.log('cool') })" class="k-primary k-button" id="btnSaveUserDetail" type="button" data-role="button" role="button" aria-disabled="false" tabindex="0">
+            Save!
+        </button>
+    </div>
+
+</form>
+
+<script>
+    function saveUserDetail() {
+
+    }
+</script>

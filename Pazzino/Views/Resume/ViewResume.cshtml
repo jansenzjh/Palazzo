@@ -1,0 +1,164 @@
+﻿@model Pazzino.Models.Resume
+@{
+    ViewBag.Title = "View Resume";
+}
+
+<h2>Resume - @string.Format("{0} {1}", Model.UserDetail.FirstName, Model.UserDetail.LastName)</h2>
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>Full Name</dt>
+        <dd>
+            @(string.Format("{0} {1}", Model.UserDetail.FirstName, Model.UserDetail.LastName))
+        </dd>
+        <dt>Age/Birthday</dt>
+        <dd>
+            @(string.Format("{1} {0} years old", (DateTime.Today.Year - Model.UserDetail.Birthday.Year).ToString(), Model.UserDetail.Birthday.ToShortDateString()))
+        </dd>
+        <dt>Gender</dt>
+        <dd>
+            @(string.Format("{0}", Model.UserDetail.Gender))
+        </dd>
+        <dt>Nationality</dt>
+        <dd>
+            @(string.Format("{0}", Model.UserDetail.Nationality))
+        </dd>
+    </dl>
+    <hr />
+
+    <dl class="dl-horizontal">
+        
+        <dt>Email</dt>
+        <dd>
+            @(string.Format("{0}", Model.UserDetail.Email))
+        </dd>
+        <dt>Phone</dt>
+        <dd>
+            @(string.Format("{0}", Model.UserDetail.Phone))
+        </dd>
+        <dt>Address</dt>
+        <dd>
+            @(string.Format("{0} {1}", Model.UserDetail.Address1, Model.UserDetail.Address2))
+        </dd>
+        <dd>
+            @(string.Format("{0}, {1} {2}", Model.UserDetail.City, Model.UserDetail.State, Model.UserDetail.Zip))
+        </dd>
+        <dt>Interest</dt>
+        <dd>
+            @(string.Format("{0}", Model.UserDetail.Interest))
+        </dd>
+        <dt>Achievement</dt>
+        <dd>
+            @(string.Format("{0}", Model.UserDetail.Achievement))
+        </dd>
+    </dl>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>Interest</dt>
+        <dd>
+            @(string.Format("{0}", Model.UserDetail.Interest))
+        </dd>
+        <dt>Achievement</dt>
+        <dd>
+            @(string.Format("{0}", Model.UserDetail.Achievement))
+        </dd>
+    </dl>
+    <hr />
+
+    @if (Model.Educations != null && Model.Educations.Count > 0)
+    {
+        <dl class="dl-horizontal">
+
+            <dt>Education</dt>
+            @foreach (var o in Model.Educations)
+            {
+                <dd>
+                    @(string.Format("{0}    {1}    {2}", o.Degree, o.Institute, o.GraduationYear))
+                </dd>
+            }
+        </dl>
+        <hr />
+    }
+
+    @if (Model.Languages != null && Model.Languages.Count > 0)
+    {
+        <dl class="dl-horizontal">
+
+            <dt>Languages</dt>
+            @foreach (var o in Model.Languages)
+            {
+                <dd>
+                    <h3>@(string.Format("{0}", o.LanguageName))</h3>
+                </dd>
+                <dd>
+                    @(string.Format("Listening: {0}", o.ListeningLevel))
+                </dd>
+                <dd>
+                    @(string.Format("Speaking: {0}", o.SpeakingLevel))
+                </dd>
+                <dd>
+                    @(string.Format("Reading: {0}", o.ReadingLevel))
+                </dd>
+                <dd>
+                    @(string.Format("Writing: {0}", o.WritingLevel))
+                </dd>
+                
+            }
+        </dl>
+        <hr />
+    }
+
+    @if (Model.WorkExperiences != null && Model.WorkExperiences.Count > 0)
+    {
+        <dl class="dl-horizontal">
+
+            <dt>Experiences</dt>
+            @foreach (var o in Model.WorkExperiences)
+            {
+                <dd>
+                    @(string.Format("{0} - {1} {2} years", o.StartDate.ToShortDateString(), o.EndDate.ToShortDateString(), Math.Round(((o.EndDate - o.StartDate).TotalDays / 365), 1)))
+                </dd>
+                <dd>
+                    @(string.Format("{0}   {1}    {2}", o.OrganizationName, o.Designation, o.JobField))
+                </dd>
+                <dd>
+                    @(string.Format("{0}", o.JobDescription))
+                </dd>
+            }
+        </dl>
+        <hr />
+    }
+    
+    @if (Model.Trainings != null && Model.Trainings.Count > 0)
+    {
+        <dl class="dl-horizontal">
+
+            <dt>Trainings</dt>
+            @foreach (var o in Model.Trainings)
+            {
+                <dd>
+                    @(string.Format("{0}   {1}    {2}", o.Field, o.TrainingTitle, o.OrganizationName))
+                </dd>
+                
+            }
+        </dl>
+        <hr />
+    }
+
+    @if (Model.Skills != null && Model.Skills.Count > 0)
+    {
+        <dl class="dl-horizontal">
+
+            <dt>Skills</dt>
+            @foreach (var o in Model.Skills)
+            {
+                <dd>
+                    @(string.Format("{0}: {1}", o.SkillName, o.SkillLevel))
+                </dd>
+
+            }
+        </dl>
+        <hr />
+    }
+</div>

@@ -1,0 +1,52 @@
+﻿
+
+
+
+@(Html.Kendo().Grid<Pazzino.Models.JobPostModel>()
+    .Name("CompanyJobsGrid")
+    .Columns(columns =>
+    {
+        columns.Bound(p => p.JobLocation).Width(200);
+        columns.Bound(p => p.JobName).Width(200);
+        columns.Bound(p => p.JobPostDate).Format("{0:MM/dd/yy}");
+        columns.Bound(p => p.ExpireDate).Format("{0:MM/dd/yy}");
+        columns.Template(@<text></text>).ClientTemplate("<a href='" + Url.Action("EditJobPost", "Job") + "?JobPostID=#=Id#'>Edit</a>").Width(50);
+        columns.Command(command => { command.Destroy().Text(" "); }).Width(100);
+    })
+    .Sortable()
+    .Scrollable()
+    .HtmlAttributes(new { style = "height:250px;" })
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .PageSize(20)
+        .Events(events => events.Error("error_handler"))
+        .Model(model =>
+        {
+            model.Id(p => p.Id);
+            model.Field(x => x.UserID).DefaultValue(SessionItems.CurrentUser.Id);
+        })
+        .Read(read => read.Action("CompanyJob_Read", "Job"))
+        .Destroy(update => update.Action("CompanyJob_Destroy", "Job"))
+    )
+)
+<script type="text/javascript">
+    function error_handler(e) {
+        if (e.errors) {
+            var message = "Errors:\n";
+            $.each(e.errors, function (key, value) {
+                if ('errors' in value) {
+                    $.each(value.errors, function () {
+                        message += this + "\n";
+                    });
+                }
+            });
+            alert(message);
+        }
+    }
+</script>
+
+<style>
+    div.k-edit-form-container {
+        width: auto;
+    }
+</style>

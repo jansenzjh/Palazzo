@@ -1,0 +1,190 @@
+﻿
+<div id="example">
+    <div class="demo-section k-header custom-width">
+        @using (Html.BeginForm("UploadResumeDoc", "Resume", FormMethod.Post, new { id = "uploadResumeDocForm" }))
+        {
+
+            <div class="document-options-wrapper">
+                <div class="column">
+                    @(Html.Kendo().Upload()
+                        .Name("customDocument")
+                        .Multiple(false)
+                        .ShowFileList(false)
+                        .Events(events => events.Select("onSelect"))
+                    )
+
+                    @(Html.Kendo().Button()
+                        .Name("uploadFileBtn")
+                        .Content("Load Custom Document")
+                        .HtmlAttributes(new { type = "button" })
+                        .Events(events => events.Click("uploadFile"))
+                    )
+                    
+                </div>
+                
+                <div class="column">
+
+                </div>
+            </div>
+            <hr />
+            <div class="file-options-wrapper">
+                <div class="column float-right">
+                    
+                </div>
+                <div class="column"><span>File: </span><span id="fileName"></span></div>
+            </div>
+
+            <hr class="clear" />
+            <input id="btnUploadResume" type="submit" class="k-button k-primary wide-btn" value="Upload" />
+        }
+
+    </div>
+</div>
+
+<script>
+
+    $(document).ready(function () {
+        $("#uploadResumeDocForm").submit(function (evt) {
+            evt.stopPropagation(); 
+            evt.preventDefault();
+            var formData = new FormData($(this)[0]);
+            $.ajax({
+                url: this.action,
+                type: 'POST',
+                data: formData,
+                async: false,
+                cache: false,
+                contentType: false,
+                enctype: 'multipart/form-data',
+                processData: false,
+                success: function (data) {
+                    if (data.BooleanResult) {
+                        $.notify({ message: 'Upload Successfully!' }, { type: "success" });
+                    }
+                }
+            });
+            return false;
+        });
+    });
+
+    function loadTemplate(ev) {
+        clearHighlights();
+        $("#fileName").text("SampleDocument.docx");
+        ev.sender.element.siblings(".imageContainer").addClass("highlighted");
+    }
+
+    function uploadFile(ev) {
+        $("#customDocument").click();
+    }
+
+    function onSelect(ev) {
+        var file = ev.files[0];
+        clearHighlights();
+
+        if (!/.docx|.rtf|.html|.txt/.test(file.extension)) {
+            alert("Only documents with *.docx, *.rtf, *.html or *.txt extensions are accepted!");
+            ev.preventDefault();
+        } else {
+            var fileExt = file.extension.substr(1);
+            $(".imageContainer.custom-doc img").attr("src", "/Content/web/wordsprocessing/" + fileExt + "_file.png");
+            $(".imageContainer.custom-doc").addClass("highlighted");
+            $("#fileName").text(file.name);
+        }
+    }
+
+    function clearHighlights() {
+        $("#fileName").text("");
+        $(".imageContainer").removeClass("highlighted");
+        $(".imageContainer.custom-doc img").attr("src", "/Content/web/wordsprocessing/CustomDocument_file.png");
+
+        // clear uploaded files
+        var upload = $("#customDocument").data("kendoUpload");
+        var fileInput = upload.wrapper.find("input").first();
+        if (!fileInput.is("#customDocument")) {
+            fileInput.remove();
+        }
+    }
+</script>
+
+<style>
+    .demo-section.custom-width {
+        max-width: 515px;
+    }
+
+    .column {
+        vertical-align: middle;
+        display: inline-block;
+    }
+
+    .document-options-wrapper button {
+        margin-bottom: 10px;
+    }
+
+    .document-options-wrapper .column:not(:first-child) {
+        margin-left: 10px;
+    }
+
+    .document-options-wrapper .column.or-elm {
+        margin-top: 35px;
+    }
+
+    .file-options-wrapper {
+        line-height: 30px;
+    }
+
+    .imageContainer {
+        border: 1px solid #c9c9c9;
+        height: 259px;
+        width: 200px;
+        position: relative;
+    }
+
+        .imageContainer.highlighted {
+            border-color: #36B4CB;
+        }
+
+        .imageContainer img {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+            max-height: 100%;
+            max-width: 100%;
+            width: auto;
+            height: auto;
+        }
+
+    .column #fileName {
+        display: inline-block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        vertical-align: middle;
+        white-space: nowrap;
+        width: 179px;
+    }
+
+    input.wide-btn {
+        width: 100%;
+    }
+
+    .k-upload {
+        display: none;
+    }
+
+    .float-right {
+        float: right;
+    }
+
+    .clear {
+        clear: both;
+    }
+
+    hr {
+        margin: 15px 0;
+        border-width: 0 0 1px 0;
+        border-color: #c9c9c9;
+        border-style: solid;
+    }
+</style>

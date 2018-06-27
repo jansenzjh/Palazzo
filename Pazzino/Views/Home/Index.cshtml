@@ -1,0 +1,71 @@
+﻿@{
+    ViewBag.Title = "Home";
+}
+
+
+
+<div class="row">
+    <div class="col-lg-4"></div>
+    <div class="col-lg-4">
+        <h1>@SessionItems.WebsiteName</h1>
+        
+    </div>
+    <div class="col-lg-4"></div>
+
+</div>
+
+<div class="row">
+    <div class="col-lg-1"></div>
+    <div class="col-lg-10">
+        @Html.Partial("JobSearchForm")
+        <hr />
+    </div>
+    <div class="col-lg-1"></div>
+    
+</div>
+
+<div class="row">
+    <div class="col-lg-1"></div>
+    <div class="col-lg-10">
+        @Html.Partial("UploadResumePostAdView")
+        <hr />
+    </div>
+    <div class="col-lg-1"></div>
+
+</div>
+
+
+
+<div class="row">
+    <div class="col-sm-1">
+
+    </div>
+    <div class="col-sm-9">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Categories
+            </div>
+            <div class="panel-body">
+
+                @{ var catList = Pazzino.Models.JobCategory.GetCategories();}
+                @foreach (var cat in catList)
+            {
+                    <div class="col-sm-3">@Html.ActionLink(cat, "JobsView", "Job", new { category = cat }, null)</div>
+                }
+
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-99849071-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
